@@ -24,22 +24,22 @@ public class SignoutController {
     this.redis = redis;
   }
 
-  @PostMapping("/{tenant}/{jti}/{expirationTime}")
-  public void signout(
+  @PostMapping("/token/{tenant}/{jti}/{expirationTime}")
+  public void signoutToken(
       @PathVariable String tenant, @PathVariable String jti, @PathVariable long expirationTime) {
-    log.debug("signout");
-    signoutService.signout(tenant, jti, expirationTime);
+    log.debug("token signout");
+    signoutService.signoutToken(tenant, jti, expirationTime);
   }
 
-  @PostMapping("/full/{tenant}/{userId}")
-  public void fullSignout(@PathVariable String tenant, @PathVariable String userId) {
-    log.debug("full signout");
-    signoutService.fullSignout(tenant, userId);
+  @PostMapping("/user/{tenant}/{userId}")
+  public void signoutUser(@PathVariable String tenant, @PathVariable String userId) {
+    log.debug("user signout");
+    signoutService.signoutUser(tenant, userId);
   }
 
-  @DeleteMapping("/full/{tenant}/{userId}")
-  public void removeFullSignoutKey(@PathVariable String tenant, @PathVariable String userId) {
-    log.debug("remove full signout key");
-    authService.removeFullSignoutKey(userId);
+  @DeleteMapping("/user/{tenant}/{userId}")
+  public void removeUserSignoutKey(@PathVariable String tenant, @PathVariable String userId) {
+    log.debug("remove user signout key");
+    authService.removeUserSignoutKey(userId);
   }
 }

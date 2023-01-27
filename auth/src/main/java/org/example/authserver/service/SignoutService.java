@@ -16,9 +16,9 @@ public class SignoutService {
     this.redisService = new RedisService(jedisPool);
   }
 
-  public void signout(String tenant, String jti, long expirationTime) {
+  public void signoutToken(String tenant, String jti, long expirationTime) {
     try {
-      String key = String.format(Constants.SIGNOUT_REDIS_KEY, jti);
+      String key = String.format(Constants.TOKEN_SIGNOUT_REDIS_KEY, jti);
       redisService.set(key, "1", getSignoutKeyTtl(expirationTime));
     } catch (Exception exception) {
       log.warn("Redis service is unavailable", exception);
@@ -33,9 +33,9 @@ public class SignoutService {
     return diff > 0 ? Long.valueOf(diff).intValue() : 1;
   }
 
-  public void fullSignout(String tenant, String userId) {
+  public void signoutUser(String tenant, String userId) {
     try {
-      String key = String.format(Constants.FULL_SIGNOUT_REDIS_KEY, userId);
+      String key = String.format(Constants.USER_SIGNOUT_REDIS_KEY, userId);
       redisService.set(key, "1");
     } catch (Exception exception) {
       log.warn("Redis service is unavailable", exception);
